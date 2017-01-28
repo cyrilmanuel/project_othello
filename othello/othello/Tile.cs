@@ -3,8 +3,8 @@
 namespace Reversi { 
     public class Tile
     {
-        private int column;
-        private int row;
+        public int column { get; }
+        public int row { get; }
         public int state { get; set; }
         public Tile(int col, int row)
 	    {
@@ -12,6 +12,15 @@ namespace Reversi {
             this.row = row;
             state = -1;
 	    }
-        
+
+        public static bool operator ==(Tile x, Tile y)
+        {
+            return (x.row == y.row && x.column == y.column);
+        }
+        public static bool operator !=(Tile x, Tile y)
+        {
+            return (x.row != y.row || x.column != y.column);
+        }
+
     }
 }
