@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:othello"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="850" Width="1200">
     <Grid Margin="0,0,2,2">
-        
+        <Grid Height="662" Margin="204,69,203,0" VerticalAlignment="Top">
+            <Rectangle Name="test1" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="82.75" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="82.75"/>
+        </Grid>
     </Grid>
 </Window>
