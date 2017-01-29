@@ -56,7 +56,7 @@ namespace Reversi
                 {
                     Rectangle tile = new Rectangle();
                     tile.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-                    tile.MouseEnter += new EventHandler(tile_MouseEnter);
+                    tile.MouseEnter += new MouseEventHandler(tile_MouseEnter);
                     tabRect[i, j] = tile;
                     Grid.SetColumn(tile, j);
                     Grid.SetRow(tile, i);
