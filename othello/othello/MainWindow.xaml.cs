@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
 using System.Timers;
+using System.Windows.Threading;
 
 namespace Reversi
 {
@@ -24,27 +25,37 @@ namespace Reversi
     public partial class MainWindow : Window
     {
         Board gameBoard;
-        Timer[] playertimers;
         public MainWindow()
         {
             InitializeComponent();
             gameBoard = new Board();
             initializeGrid();
-            initializeTimers();
+            initializeTimer();
 
         }
-        private void initializeTimers()
+
+
+        private void initializeTimer()
         {
-            playertimers = new Timer[2] { new Timer(1000), new Timer(1000) };
-            for (int i = 0; i < 2; i++) {
-                playertimers[i].Elapsed += OnTimedEvent;
-            }
+
+            DispatcherTimer updateTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
+            updateTimer.Tick += new EventHandler(OnUpdateTimerTick);
+            updateTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            updateTimer.Start();
         }
 
-        private static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        private void OnUpdateTimerTick(object sender, EventArgs e)
         {
+            if (gameBoard.isWhiteTurn)
+                gameBoard.wTime++;
+            else { gameBoard.bTime++; }
+            updateDisplayedTime();
+        }
 
-            Console.WriteLine("The Elapsed event was raised by {0} at {1:mm:ss}", source.ToString(),e.SignalTime);
+        private void updateDisplayedTime()
+        {
+            player1TimePlayed.Content = string.Format("{0:00} : {1:00}", gameBoard.bTime / 60, gameBoard.bTime % 60);
+            player2TimePlayed.Content = string.Format("{0:00} : {1:00}", gameBoard.wTime / 60, gameBoard.wTime % 60);
         }
 
         private void initializeGrid()
@@ -151,20 +162,11 @@ namespace Reversi
                 col++;
             }
 
+            gameBoard.isWhiteTurn = !gameBoard.isWhiteTurn;
+
             // row and col now correspond Grid's RowDefinition and ColumnDefinition mouse was 
             // over when clicked!
-            if (gameBoard.isWhiteTurn)
-            {
-                playertimers[0].Stop();
-                playertimers[1].Start();
-                gameBoard.isWhiteTurn = false;
-            }
-            else
-            {
-                playertimers[1].Stop();
-                playertimers[0].Start();
-                gameBoard.isWhiteTurn = true;
-            }
+            
         }
 
         private void tile_MouseEnter(object sender, MouseEventArgs e)

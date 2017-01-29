@@ -8,6 +8,8 @@ namespace Reversi {
         private int size; //board size
         private int wScore; //white score
         private int bScore; //black score
+        public int wTime { get; set; }
+        public int bTime { get; set; }
         private Dictionary<Tile,int[]> anchors; //anchor locations
         public Tile[,] board { get; set; }
         public bool isWhiteTurn { get; set; }
@@ -15,6 +17,8 @@ namespace Reversi {
         public Board(int size = 8)
 	    {
             this.size = size;
+            wTime = 0;
+            bTime = 0;
             anchors = new Dictionary<Tile, int[]>();
             board = new Tile[this.size, this.size];
             isWhiteTurn = false;
@@ -28,6 +32,7 @@ namespace Reversi {
             board[4, 4].state = 1;
             board[3, 4].state = 0;
             board[4, 3].state = 0;
+            updateScores();
 	    }
 
         public Board(String[] state, bool isWhiteTurn) {
@@ -42,6 +47,8 @@ namespace Reversi {
                     board[i, j].state = Int32.Parse(members[i]);
                 }
             }
+            wTime = 0;
+            bTime = 0;
             updateScores();
         }
 
