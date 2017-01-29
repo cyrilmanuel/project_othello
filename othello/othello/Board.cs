@@ -18,7 +18,8 @@ namespace Reversi {
             anchors = new Dictionary<Tile, int[]>();
             board = new Tile[this.size, this.size];
             for (int i = 0; i < this.size; i++) {
-                for (int j = 0; i < this.size; j++) {
+                for (int j = 0; j < this.size; j++) {
+                    Console.WriteLine(i +" " + j);
                     board[i, j] = new Tile(i, j);
                 }
             }

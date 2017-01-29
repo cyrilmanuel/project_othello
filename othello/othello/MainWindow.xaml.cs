@@ -24,8 +24,7 @@ namespace Reversi
         public MainWindow()
         {
             InitializeComponent();
-
-            this.gameBoard = new Board();
+            gameBoard = new Board();
         }
 
        
