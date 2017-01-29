@@ -27,9 +27,17 @@ namespace Reversi
         {
             InitializeComponent();
             gameBoard = new Board();
+            initializeGrid();
         }
 
-       
+        private void initializeGrid() {
+            Rectangle tile = new Rectangle();
+            tile.Fill = new SolidColorBrush(Color.FromRgb(255,0,0));
+            Grid.SetColumn(tile, 1);
+            Grid.SetRow(tile, 1);
+            BoardGrid.Children.Add(tile);
+            
+        }
 
         private void btnNewGame_EventClick(object sender, RoutedEventArgs e)
         {
@@ -61,9 +69,6 @@ namespace Reversi
                 writer.Dispose();
                 writer.Close();
             }
-
-           
-            
         }
 
         private void btnloadGame_EventClick(object sender, RoutedEventArgs e)
@@ -115,7 +120,6 @@ namespace Reversi
                 // over when double clicked!
 
                 MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", col, row));
-                Console.WriteLine("salut");
             }
         }
 }
