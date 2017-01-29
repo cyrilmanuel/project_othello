@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using Microsoft.Win32;
 
 namespace Reversi
 {
@@ -41,27 +43,45 @@ namespace Reversi
 
         private void btnSaveGame_EventClick(object sender, RoutedEventArgs e)
         {
-            String[] state = gameBoard.getBoard();
-            foreach (String line in state) {
-                Console.WriteLine(line);
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "partieOthello.txt";
+            saveFileDialog.Filter = "Text File | *.txt";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                StreamWriter writer = new StreamWriter(saveFileDialog.OpenFile());
+
+
+                String[] state = gameBoard.getBoard();
+                foreach (String line in state)
+                {
+                    writer.WriteLine(line);
+                }
+
+                writer.Dispose();
+                writer.Close();
             }
+
+           
+            
         }
 
         private void btnloadGame_EventClick(object sender, RoutedEventArgs e)
         {
-            this.gameBoard = new Board();
-            String[] state = gameBoard.getBoard();
-            foreach (String line in state)
-            {
-                Console.WriteLine(line);
-            }
-            this.gameBoard = new Board(state);
-            state = gameBoard.getBoard();
-            foreach (String line in state)
-            {
-                Console.WriteLine(line);
-            }
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text Files (.txt)|*.txt|All Files (*.*)|*.*";
 
+            if (openFileDialog.ShowDialog() == true)
+            {
+                String[] data = File.ReadAllLines(openFileDialog.FileName);
+                String turn = data[0];
+                String[] state = new String[data.Length -1];
+                for (int i = 1; i < data.Length; i++) { 
+                    state[i-1] = data[i];
+                }
+                // gameboard avec les données
+                this.gameBoard = new Board(state,(turn == "true"? true : false));
+            }
         }
     }
 }

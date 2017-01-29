@@ -29,7 +29,8 @@ namespace Reversi {
             board[4, 3].state = 0;
 	    }
 
-        public Board(String[] state) {
+        public Board(String[] state, bool isWhiteTurn) {
+            this.isWhiteTurn = isWhiteTurn;
             anchors = new Dictionary<Tile, int[]>();
             this.size = state.Length;
             board = new Tile[this.size, this.size];
@@ -40,6 +41,7 @@ namespace Reversi {
                     board[i, j].state = Int32.Parse(members[i]);
                 }
             }
+            updateScores();
         }
 
         public void updateScores() {
@@ -149,15 +151,16 @@ namespace Reversi {
         }
 
         public String[] getBoard() {
-            String[] state = new String[size];
-            for (int i = 0; i < size; i++)
+            String[] state = new String[size+1];
+            state[0] = isWhiteTurn ? "true" : "false";
+            for (int i = 1; i < size+1; i++)
             {
-                for (int j = 0; j < size; j++)
+                for (int j = 1; j < size+1; j++)
                 {
-                    if (j == 7)
-                        state[i] += board[i, j].state.ToString();
+                    if (j == 8)
+                        state[i] += board[i-1, j-1].state.ToString();
                     else
-                        state[i] += board[i, j].state.ToString() + ",";
+                        state[i] += board[i-1, j-1].state.ToString() + ",";
                 }
             }
             return state;
