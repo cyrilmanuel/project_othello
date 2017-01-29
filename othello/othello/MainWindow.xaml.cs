@@ -26,7 +26,6 @@ namespace Reversi
         public MainWindow()
         {
             InitializeComponent();
-           this.BoardGrid.MouseLeftButtonDown += new MouseButtonEventHandler(BoardGrid_MouseDown);
             gameBoard = new Board();
         }
 
@@ -87,8 +86,6 @@ namespace Reversi
 
         private void BoardGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount == 2) // for double-click, remove this condition if only want single click
-            {
                 var point = Mouse.GetPosition(BoardGrid);
 
                 int row = 0;
@@ -121,5 +118,4 @@ namespace Reversi
                 Console.WriteLine("salut");
             }
         }
-    }
 }
