@@ -24,6 +24,30 @@ namespace Reversi
         public MainWindow()
         {
             InitializeComponent();
+
+            this.gameBoard = new Board();
+        }
+
+       
+
+        private void btnNewGame_EventClick(object sender, RoutedEventArgs e)
+        {
+            this.gameBoard = new Board();
+        }
+
+        private void btnCloseGame_EventClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void btnSaveGame_EventClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btnloadGame_EventClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
