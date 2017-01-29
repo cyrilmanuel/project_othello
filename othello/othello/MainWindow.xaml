@@ -61,7 +61,7 @@
         </Grid>
 
 
-        <Grid Grid.Column="0" Grid.Row="1" x:Name="BoardGrid" Margin="10,10,10,10">
+        <Grid Grid.Column="0" Grid.Row="1" x:Name="BoardGrid" Background="Transparent" Margin="10,10,10,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
