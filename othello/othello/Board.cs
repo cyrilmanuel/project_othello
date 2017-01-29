@@ -29,6 +29,19 @@ namespace Reversi {
             board[4, 3].state = 0;
 	    }
 
+        public Board(String[] state) {
+            anchors = new Dictionary<Tile, int[]>();
+            this.size = state.Length;
+            board = new Tile[this.size, this.size];
+            for (int j = 0; j < state.Length; j++) {
+                String[] members = state[j].Split(',');
+                for (int i = 0; i < members.Length; i++) { 
+                    board[i, j] = new Tile(i, j);
+                    board[i, j].state = Int32.Parse(members[i]);
+                }
+            }
+        }
+
         public void updateScores() {
             wScore = 0;
             bScore = 0;

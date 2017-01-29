@@ -49,6 +49,18 @@ namespace Reversi
 
         private void btnloadGame_EventClick(object sender, RoutedEventArgs e)
         {
+            this.gameBoard = new Board();
+            String[] state = gameBoard.getBoard();
+            foreach (String line in state)
+            {
+                Console.WriteLine(line);
+            }
+            this.gameBoard = new Board(state);
+            state = gameBoard.getBoard();
+            foreach (String line in state)
+            {
+                Console.WriteLine(line);
+            }
 
         }
     }
