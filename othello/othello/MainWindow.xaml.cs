@@ -26,8 +26,7 @@ namespace Reversi
         public MainWindow()
         {
             InitializeComponent();
-
-            this.gameBoard = new Board();
+            gameBoard = new Board();
         }
 
        
@@ -47,9 +46,11 @@ namespace Reversi
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             if (saveFileDialog.ShowDialog() == true)
             {
-                // Créer l'état du jeu
-                StateGame sg = new StateGame(gb.getBoard(), 0, 1, true);
-                File.WriteAllText(saveFileDialog.FileName, sg.getJson());
+                String[] state = gameBoard.getBoard();
+                foreach (String line in state)
+                {
+                    Console.WriteLine(line);
+                }
             }
         }
 

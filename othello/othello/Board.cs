@@ -18,7 +18,7 @@ namespace Reversi {
             anchors = new Dictionary<Tile, int[]>();
             board = new Tile[this.size, this.size];
             for (int i = 0; i < this.size; i++) {
-                for (int j = 0; i < this.size; j++) {
+                for (int j = 0; j < this.size; j++) {
                     board[i, j] = new Tile(i, j);
                 }
             }
@@ -34,7 +34,7 @@ namespace Reversi {
             bScore = 0;
             for (int i = 0; i < board.GetLength(0); i++)
             {
-                for (int j = 0; i < board.GetLength(1); j++)
+                for (int j = 0; j < board.GetLength(1); j++)
                 {
                     if (board[i, j].state == 0)
                         bScore++;
@@ -133,6 +133,21 @@ namespace Reversi {
         public int GetBlackScore()
         {
             return bScore;
+        }
+
+        public String[] getBoard() {
+            String[] state = new String[size];
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (j == 7)
+                        state[i] += board[i, j].state.ToString();
+                    else
+                        state[i] += board[i, j].state.ToString() + ",";
+                }
+            }
+            return state;
         }
     }
 }
