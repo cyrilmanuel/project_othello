@@ -41,7 +41,10 @@ namespace Reversi
 
         private void btnSaveGame_EventClick(object sender, RoutedEventArgs e)
         {
-            
+            String[] state = gameBoard.getBoard();
+            foreach (String line in state) {
+                Console.WriteLine(line);
+            }
         }
 
         private void btnloadGame_EventClick(object sender, RoutedEventArgs e)
