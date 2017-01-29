@@ -25,7 +25,6 @@ namespace Reversi
     {
         Board gameBoard;
         Timer[] playertimers;
-        public Rectangle[,] tabRect;
         public MainWindow()
         {
             InitializeComponent();
@@ -50,14 +49,23 @@ namespace Reversi
 
         private void initializeGrid()
         {
-            tabRect = new Rectangle[8, 8];
             for (int i = 0; i < 8; i++){ 
                 for (int j = 0; j < 8; j++)
                 {
                     Rectangle tile = new Rectangle();
-                    tile.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                    switch (gameBoard.board[i, j].state) {
+                        case -1:
+                            tile.Fill = Brushes.Green;
+                            break;
+                        case 0:
+                            tile.Fill = Brushes.Black;
+                            break;
+                        case 1:
+                            tile.Fill = Brushes.White;
+                            break;
+                    }
                     tile.MouseEnter += new MouseEventHandler(tile_MouseEnter);
-                    tabRect[i, j] = tile;
+                    tile.MouseLeave += new MouseEventHandler(tile_MouseLeave);
                     Grid.SetColumn(tile, j);
                     Grid.SetRow(tile, i);
                     BoardGrid.Children.Add(tile);
@@ -124,8 +132,7 @@ namespace Reversi
             int col = 0;
             double accumulatedHeight = 0.0;
             double accumulatedWidth = 0.0;
-            MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", point.X, point.Y));
-
+        
             // calc row mouse was over
             foreach (var rowDefinition in BoardGrid.RowDefinitions)
             {
@@ -162,14 +169,25 @@ namespace Reversi
 
         private void tile_MouseEnter(object sender, MouseEventArgs e)
         {
-
             var element = (UIElement)e.Source;
-
             int c = Grid.GetColumn(element);
             int r = Grid.GetRow(element);
 
-            MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", r, c));
+            if (gameBoard.IsPlayable(c, r, gameBoard.isWhiteTurn))
+            {
+                if (gameBoard.isWhiteTurn)
+                {
+                    ((Rectangle)sender).Fill = Brushes.Black;
+                }
+                else {
+                    ((Rectangle)sender).Fill = Brushes.White;
+                }  
+            }
+        }
 
+        private void tile_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Rectangle)sender).Fill = Brushes.Green;
         }
     }
 }
