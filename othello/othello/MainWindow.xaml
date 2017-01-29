@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="0" Grid.Row="0" Height="Auto" Margin="10,10,0,10" Orientation="Horizontal">
-            <Label FontSize="18" FontWeight="UltraBold" Foreground="Black" Padding="15" Grid.Column="0" Grid.Row="0" Margin="0,5,5,5">Player Name : player A</Label>
+            <Label FontSize="18" FontWeight="UltraBold" Foreground="Black" Padding="15" Grid.Column="0" Grid.Row="0" Margin="0,5,5,5">Player Name : player Black</Label>
             <Button x:Name="btnNew" Click="btnNewGame_EventClick" Content="New Game" Grid.Column="1" Grid.Row="0" Padding="10" Margin="30,5,5,5"/>
             <Button x:Name="btnClose" Click="btnCloseGame_EventClick" Content="Quit Game" Grid.Column="2"  Grid.Row="0" Padding="10"  Margin="30,5,5,5"/>
             <Button x:Name="btnSave"  Click="btnSaveGame_EventClick" Content="Save Game" Grid.Column="3"  Grid.Row="0" Padding="10"  Margin="30,5,5,5"/>
@@ -50,8 +50,8 @@
             <Border BorderBrush="#00FF00" Grid.Row="2" Grid.Column="1" BorderThickness="0,1,1,1"/>
             <Border BorderBrush="#0000FF" Grid.Row="2" Grid.Column="2" BorderThickness="0,0,1,1"/>
 
-            <Label FontSize="15" FontWeight="Bold" Foreground="Black"  Grid.Column="1" Grid.Row="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Player 1</Label>
-            <Label FontSize="15" FontWeight="Bold" Foreground="Black"  Grid.Column="2" Grid.Row="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Player 2</Label>
+            <Label FontSize="15" FontWeight="Bold" Foreground="Black"  Grid.Column="1" Grid.Row="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Player black</Label>
+            <Label FontSize="15" FontWeight="Bold" Foreground="Black"  Grid.Column="2" Grid.Row="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Player white</Label>
             <Label FontSize="15" FontWeight="Bold" Foreground="Black" Grid.Column="0" Grid.Row="1"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Play time</Label>
             <Label FontSize="15" FontWeight="Bold" Foreground="Black"  Grid.Column="0" Grid.Row="2"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Score</Label>
             <Label x:Name="player1TimePlayed" FontSize="30" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0</Label>

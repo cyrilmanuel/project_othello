@@ -25,6 +25,7 @@ namespace Reversi
     {
         Board gameBoard;
         Timer[] playertimers;
+        public Rectangle[,] tabRect;
         public MainWindow()
         {
             InitializeComponent();
@@ -49,12 +50,20 @@ namespace Reversi
 
         private void initializeGrid()
         {
-            Rectangle tile = new Rectangle();
-            tile.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-            Grid.SetColumn(tile, 1);
-            Grid.SetRow(tile, 1);
-            BoardGrid.Children.Add(tile);
-
+            tabRect = new Rectangle[8, 8];
+            for (int i = 0; i < 8; i++){ 
+                for (int j = 0; j < 8; j++)
+                {
+                    Rectangle tile = new Rectangle();
+                    tile.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                    tile.MouseEnter += new EventHandler(tile_MouseEnter);
+                    tabRect[i, j] = tile;
+                    Grid.SetColumn(tile, j);
+                    Grid.SetRow(tile, i);
+                    BoardGrid.Children.Add(tile);
+                }
+            }
+            
         }
 
         private void btnNewGame_EventClick(object sender, RoutedEventArgs e)
@@ -115,6 +124,7 @@ namespace Reversi
             int col = 0;
             double accumulatedHeight = 0.0;
             double accumulatedWidth = 0.0;
+            MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", point.X, point.Y));
 
             // calc row mouse was over
             foreach (var rowDefinition in BoardGrid.RowDefinitions)
@@ -142,11 +152,24 @@ namespace Reversi
                 playertimers[1].Start();
                 gameBoard.isWhiteTurn = false;
             }
-            else {
+            else
+            {
                 playertimers[1].Stop();
                 playertimers[0].Start();
                 gameBoard.isWhiteTurn = true;
             }
+        }
+
+        private void tile_MouseEnter(object sender, MouseEventArgs e)
+        {
+
+            var element = (UIElement)e.Source;
+
+            int c = Grid.GetColumn(element);
+            int r = Grid.GetRow(element);
+
+            MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", r, c));
+
         }
     }
 }
