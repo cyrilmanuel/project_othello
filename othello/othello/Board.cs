@@ -17,6 +17,7 @@ namespace Reversi {
             this.size = size;
             anchors = new Dictionary<Tile, int[]>();
             board = new Tile[this.size, this.size];
+            isWhiteTurn = false;
             for (int i = 0; i < this.size; i++) {
                 for (int j = 0; j < this.size; j++) {
                     board[i, j] = new Tile(i, j);
