@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using Microsoft.Win32;
 
 namespace Reversi
 {
@@ -42,12 +44,31 @@ namespace Reversi
 
         private void btnSaveGame_EventClick(object sender, RoutedEventArgs e)
         {
-            
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                // Créer l'état du jeu
+                StateGame sg = new StateGame(gb.getBoard(), 0, 1, true);
+                File.WriteAllText(saveFileDialog.FileName, sg.getJson());
+            }
         }
 
         private void btnloadGame_EventClick(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                String state = File.ReadAllText(openFileDialog.FileName);
+                StateGame st = JsonConvert.DeserializeObject<StateGame>(state);
+                // Mise à jour du board.
+                gb.setBoard(st.getCaseBoard());
+                // Mise à jour du joueur
+                this.gb.activePlayer = st.ActivePlayer;
+                gb.majScores();
+                MAJ();
+                Console.WriteLine(state);
 
+            }
         }
     }
 }
