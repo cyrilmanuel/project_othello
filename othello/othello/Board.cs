@@ -110,7 +110,7 @@ namespace Reversi {
                 while (currentposition != entry.Key) {
                     currentposition = board[line + xdirection, column + ydirection];
                     //flip the current piece
-                    currentposition.state = (isWhite ? 0 : 1);
+                    currentposition.state = (currentposition.state == 0 ? 1 : 0);
                 }
             }
             //once we've flipped all the pieces for the move, empty the anchors for the current move
