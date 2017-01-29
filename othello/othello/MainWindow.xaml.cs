@@ -26,6 +26,7 @@ namespace Reversi
         public MainWindow()
         {
             InitializeComponent();
+           this.BoardGrid.MouseLeftButtonDown += new MouseButtonEventHandler(BoardGrid_MouseDown);
             gameBoard = new Board();
         }
 
@@ -81,6 +82,43 @@ namespace Reversi
                 }
                 // gameboard avec les données
                 this.gameBoard = new Board(state,(turn == "true"? true : false));
+            }
+        }
+
+        private void BoardGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2) // for double-click, remove this condition if only want single click
+            {
+                var point = Mouse.GetPosition(BoardGrid);
+
+                int row = 0;
+                int col = 0;
+                double accumulatedHeight = 0.0;
+                double accumulatedWidth = 0.0;
+
+                // calc row mouse was over
+                foreach (var rowDefinition in BoardGrid.RowDefinitions)
+                {
+                    accumulatedHeight += rowDefinition.ActualHeight;
+                    if (accumulatedHeight >= point.Y)
+                        break;
+                    row++;
+                }
+
+                // calc col mouse was over
+                foreach (var columnDefinition in BoardGrid.ColumnDefinitions)
+                {
+                    accumulatedWidth += columnDefinition.ActualWidth;
+                    if (accumulatedWidth >= point.X)
+                        break;
+                    col++;
+                }
+
+                // row and col now correspond Grid's RowDefinition and ColumnDefinition mouse was 
+                // over when double clicked!
+
+                MessageBox.Show(string.Format("Grid clicked at column {0}, row {1}", col, row));
+                Console.WriteLine("salut");
             }
         }
     }
