@@ -6,28 +6,83 @@
         xmlns:local="clr-namespace:Reversi"
         mc:Ignorable="d"
         Title="MainWindow" Height="850" Width="1200">
-    <Border BorderBrush="Green" BorderThickness="4" Padding="1">
-        <Grid ShowGridLines="True">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="9*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" Height="Auto" Margin="10,10,0,10" Orientation="Horizontal">
+            <Label FontSize="18" FontWeight="UltraBold" Foreground="Black" Padding="15" Grid.Column="0" Grid.Row="0" Margin="0,5,5,5">Player Name : player A</Label>
+            <Button x:Name="btnNew" Click="btnNewGame_EventClick" Content="New Game" Grid.Column="1" Grid.Row="0" Padding="10" Margin="30,5,5,5"/>
+            <Button x:Name="btnClose" Click="btnCloseGame_EventClick" Content="Quit Game" Grid.Column="2"  Grid.Row="0" Padding="10"  Margin="30,5,5,5"/>
+            <Button x:Name="btnSave"  Click="btnSaveGame_EventClick" Content="Save Game" Grid.Column="3"  Grid.Row="0" Padding="10"  Margin="30,5,5,5"/>
+            <Button x:Name="btnload" Click="btnloadGame_EventClick" Content="Load Game" Grid.Column="4"  Grid.Row="0" Padding="10"  Margin="30,5,5,5"/>
+        </StackPanel>
+
+        <Grid Grid.Column="1" Grid.Row="1" Margin="0,80,0.0,300">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="#FF0000" Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1"/>
+            <Border BorderBrush="#FF0000" Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1"/>
+            <Border BorderBrush="#FF0000" Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,0"/>
+            <Border BorderBrush="#FF0000" Grid.Row="0" Grid.Column="1" BorderThickness="0,0,1,1"/>
+            <Border BorderBrush="#FF0000" Grid.Row="0" Grid.Column="2" BorderThickness="0,0,0,1"/>
+
+            <Border BorderBrush="#00FF00" Grid.Row="1" Grid.Column="1" BorderThickness="0,0,1,1"/>
+            <Border BorderBrush="#0000FF" Grid.Row="1" Grid.Column="2" BorderThickness="0,0,1,1"/>
+            <Border BorderBrush="#00FF00" Grid.Row="2" Grid.Column="1" BorderThickness="0,1,1,1"/>
+            <Border BorderBrush="#0000FF" Grid.Row="2" Grid.Column="2" BorderThickness="0,0,1,1"/>
+
+            <Label FontSize="15" FontWeight="Bold" Foreground="Black"  Grid.Column="1" Grid.Row="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Player 1</Label>
+            <Label FontSize="15" FontWeight="Bold" Foreground="Black"  Grid.Column="2" Grid.Row="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Player 2</Label>
+            <Label FontSize="15" FontWeight="Bold" Foreground="Black" Grid.Column="0" Grid.Row="1"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Play time</Label>
+            <Label FontSize="15" FontWeight="Bold" Foreground="Black"  Grid.Column="0" Grid.Row="2"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center">Score</Label>
+            <Label x:Name="player1TimePlayed" FontSize="30" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0</Label>
+            <Label x:Name="player1Score" FontSize="30" Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0</Label>
+            <Label x:Name="player2TimePlayed" FontSize="30" Grid.Column="2" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0</Label>
+            <Label x:Name="player2Score" FontSize="30" Grid.Column="2" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">0</Label>
+        </Grid>
+
+
+        <Grid Grid.Column="0" Grid.Row="1" x:Name="BoardGrid" Margin="10,10,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
         </Grid>
-    </Border>
+    </Grid>
 </Window>
