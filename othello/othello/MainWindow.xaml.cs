@@ -43,32 +43,40 @@ namespace Reversi
 
         private void btnSaveGame_EventClick(object sender, RoutedEventArgs e)
         {
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "partieOthello.txt";
+            saveFileDialog.Filter = "Text File | *.txt";
             if (saveFileDialog.ShowDialog() == true)
             {
+                StreamWriter writer = new StreamWriter(saveFileDialog.OpenFile());
+
+
                 String[] state = gameBoard.getBoard();
                 foreach (String line in state)
                 {
-                    Console.WriteLine(line);
+                    writer.WriteLine(line);
                 }
+
+                writer.Dispose();
+                writer.Close();
             }
+
+           
+            
         }
 
         private void btnloadGame_EventClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text Files (.txt)|*.txt|All Files (*.*)|*.*";
+
             if (openFileDialog.ShowDialog() == true)
             {
-                String state = File.ReadAllText(openFileDialog.FileName);
-                StateGame st = JsonConvert.DeserializeObject<StateGame>(state);
-                // Mise à jour du board.
-                gb.setBoard(st.getCaseBoard());
-                // Mise à jour du joueur
-                this.gb.activePlayer = st.ActivePlayer;
-                gb.majScores();
-                MAJ();
-                Console.WriteLine(state);
+                String[] state = File.ReadAllLines(openFileDialog.FileName);
 
+                // gameboard avec les données
+                //this.gameBoard = new Board(state);
             }
         }
     }
