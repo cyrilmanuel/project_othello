@@ -88,6 +88,9 @@ namespace Reversi
         private void btnNewGame_EventClick(object sender, RoutedEventArgs e)
         {
             this.gameBoard = new Board();
+            updateDisplayedBoard();
+            updateDisplayedScores();
+            updateDisplayedTime();
         }
 
         private void btnCloseGame_EventClick(object sender, RoutedEventArgs e)
@@ -132,6 +135,9 @@ namespace Reversi
                 }
                 // gameboard avec les données
                 this.gameBoard = new Board(state, (turn == "true" ? true : false));
+                updateDisplayedBoard();
+                updateDisplayedScores();
+                updateDisplayedTime();
             }
         }
 
@@ -162,11 +168,32 @@ namespace Reversi
                 col++;
             }
 
+            gameBoard.PlayMove(col, row, gameBoard.isWhiteTurn);
+            foreach (String line in gameBoard.getBoard())
+                Console.WriteLine(line);
+            updateDisplayedBoard();
+            updateDisplayedScores();
             gameBoard.isWhiteTurn = !gameBoard.isWhiteTurn;
 
             // row and col now correspond Grid's RowDefinition and ColumnDefinition mouse was 
             // over when clicked!
             
+        }
+        private void updateDisplayedScores() {
+            player1Score.Content = gameBoard.GetBlackScore();
+            player2Score.Content = gameBoard.GetWhiteScore();
+        }
+        private void updateDisplayedBoard() {
+            int intTotalChildren = BoardGrid.Children.Count - 1;
+            for (int intCounter = intTotalChildren; intCounter > 0; intCounter--)
+            {
+                if (BoardGrid.Children[intCounter].GetType() == typeof(Rectangle))
+                {
+                    Rectangle ucCurrentChild = (Rectangle)BoardGrid.Children[intCounter];
+                    BoardGrid.Children.Remove(ucCurrentChild);
+                }
+            }
+            initializeGrid();
         }
 
         private void tile_MouseEnter(object sender, MouseEventArgs e)
@@ -174,22 +201,28 @@ namespace Reversi
             var element = (UIElement)e.Source;
             int c = Grid.GetColumn(element);
             int r = Grid.GetRow(element);
-
+            Console.WriteLine("from caller: col-{0} row-{1}", c, r);
             if (gameBoard.IsPlayable(c, r, gameBoard.isWhiteTurn))
             {
-                if (gameBoard.isWhiteTurn)
+                if (!gameBoard.isWhiteTurn)
                 {
-                    ((Rectangle)sender).Fill = Brushes.Black;
+                    ((Rectangle)sender).Fill = Brushes.White;
                 }
                 else {
-                    ((Rectangle)sender).Fill = Brushes.White;
+                    ((Rectangle)sender).Fill = Brushes.Black;
                 }  
             }
         }
 
         private void tile_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((Rectangle)sender).Fill = Brushes.Green;
+            foreach (String line in gameBoard.getBoard())
+                Console.WriteLine(line);
+            var element = (UIElement)e.Source;
+            int c = Grid.GetColumn(element);
+            int r = Grid.GetRow(element);
+            if(gameBoard.board[r,c].state==-1)
+                ((Rectangle)sender).Fill = Brushes.Green;
         }
     }
 }
