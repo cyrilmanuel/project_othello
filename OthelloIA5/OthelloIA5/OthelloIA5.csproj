@@ -7,8 +7,8 @@
     <ProjectGuid>{E68A6046-41E8-45FA-892C-A9CA9E46A522}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OthelloIA12</RootNamespace>
-    <AssemblyName>OthelloIA12</AssemblyName>
+    <RootNamespace>OthelloIA5</RootNamespace>
+    <AssemblyName>OthelloIA5</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OthelloIA12.cs" />
+    <Compile Include="OthelloIA5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
