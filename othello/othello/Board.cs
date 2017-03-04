@@ -111,7 +111,7 @@ namespace Reversi {
                 if (neighbor.state != (isWhite ? 1 : 0))
                     return false;
                 //now to check in the given direction until out of board or an equivalent color to the caller is met
-                while (neighbor.state == (isWhite ? 1 : 0)) {
+                while (neighbor.state != (isWhite ? 1 : 0)) {
                     nCoordx += xdirection;
                     nCoordy += ydirection;
                     if (nCoordx < 0 || nCoordy < 0 || nCoordy > 7 || nCoordx > 7)

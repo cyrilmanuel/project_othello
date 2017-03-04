@@ -69,10 +69,17 @@ namespace Reversi
                             tile.Fill = Brushes.Green;
                             break;
                         case 0:
-                            tile.Fill = Brushes.Black;
+                            //tile.Fill = Brushes.Black;
+                            tile.Fill = new ImageBrush
+                            {
+                                ImageSource = new BitmapImage(new Uri("../imgGame/black.png", UriKind.RelativeOrAbsolute))
+                            };
                             break;
                         case 1:
-                            tile.Fill = Brushes.White;
+                            tile.Fill = new ImageBrush
+                            {
+                                ImageSource = new BitmapImage(new Uri("../imgGame/white.png", UriKind.RelativeOrAbsolute))
+                            };
                             break;
                     }
                     tile.MouseEnter += new MouseEventHandler(tile_MouseEnter);
@@ -209,7 +216,11 @@ namespace Reversi
                     ((Rectangle)sender).Fill = Brushes.White;
                 }
                 else {
-                    ((Rectangle)sender).Fill = Brushes.Black;
+                    
+                    ((Rectangle)sender).Fill = new ImageBrush
+                    {
+                        ImageSource = new BitmapImage(new Uri("../imgGame/black.png", UriKind.RelativeOrAbsolute))
+                    };
                 }  
             }
         }
