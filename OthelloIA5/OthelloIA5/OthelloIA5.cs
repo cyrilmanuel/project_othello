@@ -44,8 +44,8 @@ namespace OthelloIA5
         private List<Vector2i> directions;
         public int[,] LogicBoard { get; set; }
         private bool isWhite;
+        private bool maxPlayer = true;
         private int whiteScore;
-        private Random rnd = new Random();
         private const string filename = "score.txt";
         public int WhiteScore
         {
@@ -80,9 +80,30 @@ namespace OthelloIA5
         public int WhiteTime { get; set; }
 
 
-        public Board() 
+        public Board()
         {
             NumTiles = 8;
+            Reset();
+
+            directions = new List<Vector2i>();
+            directions.Add(new Vector2i(0, 1));
+            directions.Add(new Vector2i(0, -1));
+            directions.Add(new Vector2i(1, 0));
+            directions.Add(new Vector2i(1, 1));
+            directions.Add(new Vector2i(1, -1));
+            directions.Add(new Vector2i(-1, 0));
+            directions.Add(new Vector2i(-1, 1));
+            directions.Add(new Vector2i(-1, -1));
+        }
+        public Board(Board other)
+        {
+            NumTiles = other.NumTiles;
+            LogicBoard = other.LogicBoard;
+            WhiteScore = other.WhiteScore;
+            BlackScore = other.BlackScore;
+            isWhite = other.isWhite;
+            blackTime = other.BlackTime;
+            whiteTime = other.whiteTime;
             Reset();
 
             directions = new List<Vector2i>();
@@ -121,7 +142,7 @@ namespace OthelloIA5
             LogicBoard[half, half - 1] = (int)TileState.Black;
             BlackScore = WhiteScore = 2;
         }
-        
+
         private int CountValidPlay(bool isWhite)
         {
             int countValidPlay = 0;
@@ -141,7 +162,6 @@ namespace OthelloIA5
         public bool isTilePlayable(int column, int line)
         {
             return (IsPlayable(column, line, isWhite));
-
         }
 
         public string GetName()
@@ -153,7 +173,7 @@ namespace OthelloIA5
         public int[,] GetBoard()
         {
             int[,] tournamentBoard = new int[8, 8];
-            for (int i=0;i<8;i++)
+            for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
@@ -243,13 +263,11 @@ namespace OthelloIA5
                 foreach (var pair in pawnsToReplace)
                 {
                     LogicBoard[pair.Item1, pair.Item2] = color;
-                   // main.UpdateBoard(pair, isWhite);
+                    // main.UpdateBoard(pair, isWhite);
                 }
 
                 BlackScore = GetBlackScore();
                 WhiteScore = GetWhiteScore();
-
-
 
                 return true;
             }
@@ -258,21 +276,27 @@ namespace OthelloIA5
 
         public Tuple<int, int> GetNextMove(int[,] game, int level, bool whiteTurn)
         {
-            List<Tuple<int, int>> possibleMoves = new List<Tuple<int, int> >();
-            for (int i=0; i< 8;i++)
+            List<Tuple<int, int>> pms = possibleMoves(whiteTurn);
+            //choose best move
+            if (pms.Count > 0)
+                //use alphaBeta here
+                return alphaBeta(new Node(this), 5, Int32.MinValue, Int32.MaxValue, whiteTurn);
+            else
+                return new Tuple<int, int>(-1, -1);
+        }
+
+        public List<Tuple<int, int>> possibleMoves(bool whiteTurn)
+        {
+            List<Tuple<int, int>> possibleMoves = new List<Tuple<int, int>>();
+            for (int i = 0; i < 8; i++)
             {
-                for (int j=0; j<8;j++)
+                for (int j = 0; j < 8; j++)
                 {
                     if (IsPlayable(i, j, whiteTurn))
                         possibleMoves.Add(new Tuple<int, int>(i, j));
                 }
             }
-            //choose best move
-            if (possibleMoves.Count > 0)
-                //use minimax here
-                return possibleMoves[rnd.Next(possibleMoves.Count)];
-            else
-                return new Tuple<int, int>(-1, -1);
+            return possibleMoves;
         }
 
         public int GetWhiteScore()
@@ -306,11 +330,77 @@ namespace OthelloIA5
             return isWhite;
         }
 
-        //TODO
-        private void miniMax() { return; }
+        private Tuple<int, int> alphaBeta(Node node, int depth, int alpha, int beta, bool whiteTurn)
+        {
+            if (depth == 0 || node.IsTerminal())
+            {
+                return node.GetTotalScore();
+            }
 
-        //TODO
-        private void eval() { return; }
+            if (whiteTurn == maxPlayer)
+            {
+                foreach (Node child in node.Children(whiteTurn))
+                {
+                    alpha = Math.Max(alpha, alphaBeta(child, depth - 1, alpha, beta, !whiteTurn).Item2);
+                    if (beta < alpha)
+                    {
+                        break;
+                    }
+                }
+                return node.GetTotalScore();
+            }
+            else
+            {
+                foreach (Node child in node.Children(whiteTurn))
+                {
+                    beta = Math.Min(beta, alphaBeta(child, depth - 1, alpha, beta, !whiteTurn).Item1);
+
+                    if (beta < alpha)
+                    {
+                        break;
+                    }
+                }
+
+                return node.GetTotalScore();
+            }
+        }
+
+    }
+
+    public class Node
+    {
+        private Board state;
+        public Node(Board board)
+        {
+            state = board;
+        }
+
+        public List<Node> Children(bool Player)
+        {
+            List<Node> children = new List<Node>();
+
+            foreach (Tuple<int, int> move in state.possibleMoves(Player))
+            {
+                Board newMove = new Board(state);
+                newMove.PlayMove(move.Item1, move.Item2, newMove.IsWhiteTurn());
+                children.Add(new Node(newMove));
+            }
+
+            return children;
+        }
+
+        public bool IsTerminal()
+        {
+            if (state.BlackScore + state.WhiteScore == state.NumTiles)
+                return true;
+
+            return false;
+        }
+
+        public Tuple<int, int> GetTotalScore()
+        {
+            return new Tuple<int, int>(state.BlackScore, state.WhiteScore);
+        }
 
     }
 
